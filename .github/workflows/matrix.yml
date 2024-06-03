@@ -5,8 +5,10 @@ on:
       - master
 jobs:
   build:
+    continue-on-error: true
     strategy:
       # Muốn chạy workflow này với những config và chỉ số khác nhau
+      # Khi một job sử dụng matrix fail thì những job khác sẽ skip
       matrix:
         node-version: [12,14,16]
         operating-system: [ubuntu-latest, windows-latest]

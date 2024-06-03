@@ -33,8 +33,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Test code
+        id: run-test
         run: npm run test
       - name: Upload test report
+        # Lấy run-test trong step, xác định outcome của id trên có fail hay không
+        if: steps.run-test.outcome == 'failure'
         uses: actions/upload-artifact@v3
         with:
           name: test-report

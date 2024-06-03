@@ -12,6 +12,14 @@ jobs:
       matrix:
         node-version: [12,14,16]
         operating-system: [ubuntu-latest, windows-latest]
+        # Inclue cho phép thêm những trường hợp mà mình set sẵn, không cần phải thêm vào các biến ở trên vì mình chỉ cần TH include chứ không cần sự kết hợp của những TH khác
+        include:
+          - node-version: 18
+            operating-system: ubuntu-latest
+        # Exclue cho phép loại bỏ đi những TH không cần thiết
+        exclude:
+          - node-version: 12
+            operating-system: windows-latest
     # Dùng ${{}} để lấy biến đã tạo trong matrix
     runs-on: ${{ matrix.operating-system }}
     steps:

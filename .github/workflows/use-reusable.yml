@@ -73,7 +73,8 @@ jobs:
     needs: build
     # Uses sử dụng ở step vì cần lấy workflow từ bên khác, có thể đại diện cho cả step và job (kết hợp giữa các job hoặc steps hoặc cả hai)
     uses: ./.github/workflows/reusable.yml
-    
+    with:
+      artifact-name: dist-files
   report:
     needs: [lint, deploy]
     if: failure()

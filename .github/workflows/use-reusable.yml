@@ -66,15 +66,25 @@ jobs:
         run: npm run build
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
+        # Truyền các biến cho reusable workflow
         with:
           name: dist-files
           path: dist
+        # secrets:
+        #   some-secret: ${{secrets.some-secret}}
+          
   deploy:
     needs: build
     # Uses sử dụng ở step vì cần lấy workflow từ bên khác, có thể đại diện cho cả step và job (kết hợp giữa các job hoặc steps hoặc cả hai)
     uses: ./.github/workflows/reusable.yml
     with:
       artifact-name: dist-files
+  print-deploy-results:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print deploy results
+        run : echo "${{needs.deploy.outputs.result}}"
   report:
     needs: [lint, deploy]
     if: failure()
